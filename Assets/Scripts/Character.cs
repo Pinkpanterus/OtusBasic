@@ -121,7 +121,7 @@ public class Character : MonoBehaviour
                 break;
 
             case State.Attack:
-                // Set otner character state Dead
+                target.GetComponent<Character>().SetState(State.Dead);
                 break;
 
             case State.BeginShoot:
@@ -130,7 +130,7 @@ public class Character : MonoBehaviour
                 break;
 
             case State.Shoot:
-                // Set otner character state Dead
+                target.GetComponent<Character>().SetState(State.Dead);
                 break;
             
             case State.Dead:
