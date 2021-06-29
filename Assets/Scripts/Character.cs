@@ -43,6 +43,11 @@ public class Character : MonoBehaviour
         originalRotation = transform.rotation;
     }
 
+    public bool GetIsDeadBool()
+    {
+        return isDead;
+    }
+
     public void SetState(State newState)
     {
         state = newState;
@@ -100,6 +105,9 @@ public class Character : MonoBehaviour
                 break;
 
             case State.RunningToEnemy:
+                if (target.GetComponent<Character>().GetIsDeadBool())
+                    return;
+               
                 animator.SetFloat("Speed", runSpeed);
                 if (RunTowards(target.position, distanceFromEnemy))
                     state = State.BeginAttack;
@@ -112,7 +120,7 @@ public class Character : MonoBehaviour
                 break;
 
             case State.BeginAttack:
-                if(!gameObject.name.Contains("zombie"))
+               if(!gameObject.name.Contains("zombie"))
                     animator.SetTrigger("MeleeAttack");
                 else
                     animator.SetTrigger("PunchAttack");
@@ -125,6 +133,9 @@ public class Character : MonoBehaviour
                 break;
 
             case State.BeginShoot:
+                if (target.GetComponent<Character>().GetIsDeadBool())
+                    return;
+
                 animator.SetTrigger("Shoot");
                 state = State.Shoot;
                 break;
